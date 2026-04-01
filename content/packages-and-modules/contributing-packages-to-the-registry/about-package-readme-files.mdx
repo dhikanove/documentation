@@ -1,36 +1,108 @@
----
-title: About package README files
----
+# @dhikanove/plnm-icon-lib
 
-We highly recommend including a `README.md` file in your package directory as it helps developers find your package on npm and have a good experience using your code in their projects. In most cases `README.md` files include directions for _installing_, _configuring_, and _using_ the code in your package; as well as any other information a user may find helpful. Just like in any GitHub repository, the `README.md` file will be rendered on the package's page. On [npmjs.com](https://www.npmjs.com/), the `README.md` is rendered as [GitHub Flavored Markdown](https://github.github.com/gfm/) via [GitHub's API](https://docs.github.com/en/rest/markdown/markdown).
+> Vue 3 SVG icon library — 155+ custom icons with TypeScript support, color customization, and URL loading.
 
-An npm package `README.md` file **must** be in the root-level directory of the package.
+## Documentation
+> https://dhikanove.github.io/PLNMIconLib/
+## Features
 
-## Creating and adding a `README.md` file to a package
+- **155+ SVG icons** — ready to use out of the box
+- **TypeScript** — full type safety with `IconName` union type
+- **Custom size** — number (px) or any CSS unit (`rem`, `em`, `%`)
+- **Custom color** — single color or multi-color support
+- **Load from URL** — fetch any external SVG at runtime
+- **Slot support** — pass your own inline SVG
+- **Tree-shakeable** — only what you use ends up in your bundle
+- **Vue 3** — built with `<script setup>` and Composition API
 
-1. In a text editor, in your package root directory, create a file called `README.md`.
-2. In the `README.md` file, add useful information about your package.
-3. Save the `README.md` file.
+## Installation
 
-<Note>
+```bash
+npm install @dhikanove/plnm-icon-lib
+```
 
-**Note:** The file extension `.md` indicates a Markdown file. For more information about Markdown, see the GitHub Guide "[Mastering Markdown](https://guides.github.com/features/mastering-markdown/#what)".
+## Usage
 
-</Note>
+### Register globally (recommended)
 
-## Updating an existing package `README.md` file
+```ts
+// main.ts
+import { createApp } from 'vue'
+import App from './App.vue'
+import { Icon } from '@dhikanove/plnm-icon-lib'
 
-The `README.md` file will only be updated on the package page when you publish a new version of your package. To update your `README.md` file:
+const app = createApp(App)
+app.component('Icon', Icon)
+app.mount('#app')
+```
 
-1. In a text editor, update the contents of the `README.md` file.
+### Import per component
 
-2. Save the `README.md` file.
+```vue
+<script setup lang="ts">
+import { Icon } from '@dhikanove/plnm-icon-lib'
+</script>
 
-3. On the command line, in the package root directory, run the following commands:
+<template>
+  <Icon name="home" />
+</template>
+```
 
-   ```
-   npm version patch
-   npm publish
-   ```
+## Props
 
-[markdown-link]: https://guides.github.com/features/mastering-markdown/#what
+| Prop      | Type                 | Default          | Description                                    |
+| --------- | -------------------- | ---------------- | ---------------------------------------------- |
+| `name`    | `IconName \| string` | —                | Name of a registered icon                      |
+| `size`    | `number \| string`   | `24`             | Width & height. Number = px; string = any unit |
+| `color`   | `string`             | `'currentColor'` | Fill color applied to all paths                |
+| `colors`  | `string[]`           | —                | Array of colors applied to paths in order      |
+| `url`     | `string`             | —                | URL of an external SVG to load at runtime      |
+| `viewBox` | `string`             | auto-detected    | Override the SVG viewBox attribute             |
+| `class`   | `string`             | —                | Extra CSS class on the wrapper element         |
+
+## Examples
+
+```vue
+<!-- Basic -->
+<Icon name="home" />
+
+<!-- Custom size -->
+<Icon name="heart" :size="32" />
+<Icon name="heart" size="2rem" />
+
+<!-- Custom color -->
+<Icon name="star" color="#FFD700" />
+
+<!-- Multi-color -->
+<Icon name="energy" :colors="['#00C853', '#FF6D00']" />
+
+<!-- Load from URL -->
+<Icon url="https://example.com/my-icon.svg" />
+
+<!-- Slot: your own SVG -->
+<Icon :size="32" color="red">
+  <svg viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+  </svg>
+</Icon>
+```
+
+## Advanced: Register custom icons
+
+```ts
+import { registerIcon } from '@dhikanove/plnm-icon-lib'
+
+registerIcon('my-icon', '<svg viewBox="0 0 24 24">...</svg>')
+```
+
+Then use like any built-in icon:
+
+```vue
+<Icon name="my-icon" />
+```
+
+## Icon List
+`a5-connector` · `ac-connector` · `add-friends` · `arrange` · `arrange-line` · `arrow-down` · `arrow-left` · `arrow-right` · `arrow-up` · `battery` · `battery-charge` · `battery-low` · `battery-not-found` · `batu-bata` · `block` · `cc` · `calendar` · `calendar-fill` · `call-center` · `car` · `car-front` · `cart` · `charge` · `charge-plug` · `chart` · `chat` · `check` · `checkmark` · `checkmark-circle` · `checkmark-circle-outline` · `chevron-down` · `chevron-left` · `chevron-right` · `chevron-up` · `circuit-breaker` · `clock` · `clock-outline` · `close` · `close-circle` · `co2` · `coffeeshop` · `contact` · `copy` · `copy-outline` · `dcccs2` · `dcch-ade-mo` · `delete` · `delivery` · `discount` · `discount-outline` · `docs` · `document-add` · `download` · `ev-car` · `ev-charger` · `edit` · `edit-fill` · `email` · `energy` · `event-solid` · `filter` · `filter-outline` · `flag` · `focus` · `food` · `gbt` · `gift` · `green-energy` · `green-energy-lamp` · `group` · `group-outline` · `help` · `history` · `history-outline` · `home` · `home-1` · `home-2` · `home-charging` · `id` · `info-solid` · `information` · `information-circle` · `instagram` · `keranjang` · `leaf` · `lens` · `lighting` · `lighting-1` · `lighting-2` · `like` · `like-outline` · `link` · `listrik` · `loading` · `location` · `location-outline` · `login` · `maintenance` · `map` · `minus` · `money` · `more-horizontal` · `more-vertical` · `movie-clip` · `musholla` · `navigate` · `navigate-outline` · `no-wifi` · `notification` · `paket` · `palu` · `pemadaman` · `pesanan` · `pickup-point` · `pin` · `pin-attention` · `pin-charger-station` · `pin-charger-station-splu` · `pin-error` · `pin-location` · `pin-map` · `pin-titik-pengisian-baterai` · `pin-titik-pengisian-socket` · `plug` · `plug-1` · `plus` · `power-socket` · `power-socket-outline` · `profile` · `profile-outline` · `question` · `refresh` · `report` · `rewards` · `rewards-outline` · `rice-cooker` · `route` · `scan` · `search` · `selfie` · `send` · `settings` · `share` · `share-outline` · `sort` · `star` · `star-outline` · `stopwatch` · `studio` · `studio-1` · `swap` · `swap-1` · `tagihan` · `thumbs` · `toilet` · `transaksi` · `transaksi-outline` · `trash` · `ubah-daya` · `upload` · `user` · `verify` · `voucher` · `wallet` · `wallet-outline` · `warning` · `warning-outline` · `watt` · `wifi` · `wifi-router` · `wifi-upgrade` · `worker` · `heart` · `image`
+## License
+
+[MIT](./LICENSE) © dhikanove
